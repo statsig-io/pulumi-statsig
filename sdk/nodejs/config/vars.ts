@@ -2,21 +2,18 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "../types/input";
-import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 declare var exports: any;
-const __config = new pulumi.Config("xyz");
+const __config = new pulumi.Config("statsig");
 
 /**
- * A region which should be used.
+ * A Statsig Console API Key
  */
-export declare const region: enums.region.Region | undefined;
-Object.defineProperty(exports, "region", {
+export declare const consoleApiKey: string | undefined;
+Object.defineProperty(exports, "consoleApiKey", {
     get() {
-        return __config.getObject<enums.region.Region>("region");
+        return __config.get("consoleApiKey");
     },
     enumerable: true,
 });

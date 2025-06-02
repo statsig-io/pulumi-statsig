@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xyz
+package statsig
 
 import (
 	"path"
@@ -20,25 +20,26 @@ import (
 	// Allow embedding bridge-metadata.json in the provider.
 	_ "embed"
 
+	statsig "github.com/statsig-io/terraform-provider-statsig/shim" // Use the shim package instead
+
+	pfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
-	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
-	xyz "github.com/pulumi/terraform-provider-xyz/provider" // Import the upstream provider
 
-	"github.com/pulumi/pulumi-xyz/provider/pkg/version"
+	"github.com/statsig-io/pulumi-statsig/provider/pkg/version"
 )
 
 // all of the token components used below.
 const (
 	// This variable controls the default name of the package in the package
 	// registries for nodejs and python:
-	mainPkg = "xyz"
+	mainPkg = "statsig"
 	// modules:
-	mainMod = "index" // the xyz module
+	mainMod = "index" // the statsig module
 )
 
-//go:embed cmd/pulumi-resource-xyz/bridge-metadata.json
+//go:embed cmd/pulumi-resource-statsig/bridge-metadata.json
 var metadata []byte
 
 // Provider returns additional overlaid schema and metadata associated with the provider.
@@ -77,17 +78,17 @@ func Provider() tfbridge.ProviderInfo {
 		//
 		//    - Replace `shimv2.NewProvider` with `pfbridge.ShimProvider`.
 		//
-		//    - In provider/cmd/pulumi-tfgen-xyz/main.go, replace the
+		//    - In provider/cmd/pulumi-tfgen-statsig/main.go, replace the
 		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen" import with
 		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen". Remove the `version.Version`
 		//      argument to `tfgen.Main`.
 		//
-		//    - In provider/cmd/pulumi-resource-xyz/main.go, replace the
+		//    - In provider/cmd/pulumi-resource-statsig/main.go, replace the
 		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge" import with
 		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge". Replace the arguments to the
 		//      `tfbridge.Main` so it looks like this:
 		//
-		//      	tfbridge.Main(context.Background(), "xyz", xyz.Provider(),
+		//      	tfbridge.Main(context.Background(), "statsig", statsig.Provider(),
 		//			tfbridge.ProviderMetadata{PulumiSchema: pulumiSchema})
 		//
 		//   Detailed instructions can be found at
@@ -95,7 +96,7 @@ func Provider() tfbridge.ProviderInfo {
 		//   After that, you can proceed as normal.
 		//
 		// This is where you give the bridge a handle to the upstream terraform provider. SDKv2
-		// convention is to have a function at "github.com/pulumi/terraform-provider-xyz/provider".New
+		// convention is to have a function at "github.com/statsig-io/terraform-provider-statsig/provider".New
 		// which takes a version and produces a factory function. The provider you are bridging may
 		// not do that. You will need to find the function (generally called in upstream's main.go)
 		// that produces a:
@@ -105,16 +106,16 @@ func Provider() tfbridge.ProviderInfo {
 		// - "github.com/hashicorp/terraform-plugin-framework/provider".Provider (for plugin-framework)
 		//
 		//nolint:lll
-		P: shimv2.NewProvider(xyz.New(version.Version)()),
+		P: pfbridge.ShimProvider(statsig.New()),
 
-		Name:    "xyz",
+		Name:    "statsig",
 		Version: version.Version,
 		// DisplayName is a way to be able to change the casing of the provider name when being
 		// displayed on the Pulumi registry
-		DisplayName: "",
+		DisplayName: "Statsig",
 		// Change this to your personal name (or a company name) that you would like to be shown in
 		// the Pulumi Registry if this package is published there.
-		Publisher: "Pulumi",
+		Publisher: "Statsig",
 		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
 		// if this package is published there.
 		//
@@ -125,37 +126,23 @@ func Provider() tfbridge.ProviderInfo {
 		// for use in Pulumi programs
 		// e.g. https://github.com/org/pulumi-provider-name/releases/download/v${VERSION}/
 		PluginDownloadURL: "",
-		Description:       "A Pulumi package for creating and managing xyz cloud resources.",
+		Description:       "A Pulumi package for creating and managing statsig resources.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"xyz", "category/cloud"},
+		Keywords:   []string{"statsig", "category/cloud"},
 		License:    "Apache-2.0",
-		Homepage:   "https://www.pulumi.com",
-		Repository: "https://github.com/pulumi/pulumi-xyz",
+		Homepage:   "https://www.statsig.com",
+		Repository: "https://github.com/statsig-io/pulumi-statsig",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this should
 		// match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:    "",
+		GitHubOrg:    "statsig-io",
 		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
 		Config: map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			"region": {
-				Type: "xyz:region/region:Region",
-			},
+			"console_api_key": {Secret: tfbridge.True()},
 		},
 		// If extra types are needed for configuration, they can be added here.
-		ExtraTypes: map[string]schema.ComplexTypeSpec{
-			"xyz:region/region:Region": {
-				ObjectTypeSpec: schema.ObjectTypeSpec{
-					Type: "string",
-				},
-				Enum: []schema.EnumValueSpec{
-					{Name: "here", Value: "HERE"},
-					{Name: "overThere", Value: "OVER_THERE"},
-				},
-			},
-		},
+		ExtraTypes: map[string]schema.ComplexTypeSpec{},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
@@ -169,7 +156,7 @@ func Provider() tfbridge.ProviderInfo {
 		Golang: &tfbridge.GolangInfo{
 			// Set where the SDK is going to be published to.
 			ImportBasePath: path.Join(
-				"github.com/pulumi/pulumi-xyz/sdk/",
+				"github.com/statsig-io/pulumi-statsig/sdk/",
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
@@ -188,6 +175,51 @@ func Provider() tfbridge.ProviderInfo {
 				"Pulumi": "3.*",
 			},
 		},
+
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"statsig_entity_property": {
+				ComputeID: tfbridge.DelegateIDField(
+					"name",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+			"statsig_keys": {
+				ComputeID: tfbridge.DelegateIDField(
+					"key",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+			"statsig_metric_source": {
+				ComputeID: tfbridge.DelegateIDField(
+					"name",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+			"statsig_gate": {
+				ComputeID: tfbridge.DelegateIDField(
+					"name",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+			"statsig_experiment": {
+				ComputeID: tfbridge.DelegateIDField(
+					"name",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+			"statsig_metric": {
+				ComputeID: tfbridge.DelegateIDField(
+					"name",
+					"statsig",
+					"https://github.com/pulumi/pulumi-statsig",
+				),
+			},
+		},
 	}
 
 	// MustComputeTokens maps all resources and datasources from the upstream provider into Pulumi.
@@ -196,7 +228,7 @@ func Provider() tfbridge.ProviderInfo {
 	//
 	// You shouldn't need to override anything, but if you do, use the [tfbridge.ProviderInfo.Resources]
 	// and [tfbridge.ProviderInfo.DataSources].
-	prov.MustComputeTokens(tokens.SingleModule("xyz_", mainMod,
+	prov.MustComputeTokens(tokens.SingleModule("statsig_", mainMod,
 		tokens.MakeStandard(mainPkg)))
 
 	prov.MustApplyAutoAliases()

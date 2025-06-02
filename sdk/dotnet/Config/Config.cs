@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.Xyz
+namespace Pulumi.Statsig
 {
     public static class Config
     {
@@ -30,16 +30,16 @@ namespace Pulumi.Xyz
             }
         }
 
-        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("xyz");
+        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("statsig");
 
-        private static readonly __Value<Pulumi.Xyz.Region.Region?> _region = new __Value<Pulumi.Xyz.Region.Region?>(() => __config.GetObject<Pulumi.Xyz.Region.Region>("region"));
+        private static readonly __Value<string?> _consoleApiKey = new __Value<string?>(() => __config.Get("consoleApiKey"));
         /// <summary>
-        /// A region which should be used.
+        /// A Statsig Console API Key
         /// </summary>
-        public static Pulumi.Xyz.Region.Region? Region
+        public static string? ConsoleApiKey
         {
-            get => _region.Get();
-            set => _region.Set(value);
+            get => _consoleApiKey.Get();
+            set => _consoleApiKey.Set(value);
         }
 
     }

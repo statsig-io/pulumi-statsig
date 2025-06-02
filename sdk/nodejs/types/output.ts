@@ -4,5 +4,423 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
-import * as enums from "../types/enums";
+
+export interface EntityPropertyIdTypeMapping {
+    /**
+     * Column name linked to the ID.
+     */
+    column: string;
+    /**
+     * ID for the Statsig unit.
+     */
+    statsigUnitId: string;
+}
+
+export interface EntityPropertyOwner {
+    /**
+     * The email of the owner. This field is optional.
+     */
+    ownerEmail: string;
+    /**
+     * ID of the owner
+     */
+    ownerId: string;
+    /**
+     * The name of the owner. This field is optional.
+     */
+    ownerName: string;
+    /**
+     * Type of the owner (e.g., SDK_KEY or USER)
+     */
+    ownerType: string;
+}
+
+export interface ExperimentGroup {
+    description: string;
+    disabled: boolean;
+    foreignGroupId: string;
+    id: string;
+    name: string;
+    parameterValues: {[key: string]: string};
+    size: number;
+}
+
+export interface ExperimentLink {
+    /**
+     * The title of the link
+     */
+    title: string;
+    /**
+     * The URL of the link
+     */
+    url: string;
+}
+
+export interface ExperimentPrimaryMetric {
+    direction: string;
+    hypothesizedValue: number;
+    name: string;
+    type: string;
+}
+
+export interface ExperimentSecondaryMetric {
+    direction: string;
+    hypothesizedValue: number;
+    name: string;
+    type: string;
+}
+
+export interface GateMonitoringMetric {
+    name: string;
+    type: string;
+}
+
+export interface GateRule {
+    /**
+     * The base ID of this rule, i.e. without any added metadata. Will remain the exact same throughout
+     */
+    baseId: string;
+    /**
+     * An array of Condition objects.
+     */
+    conditions: outputs.GateRuleCondition[];
+    /**
+     * The environments this rule is enabled for.
+     */
+    environments: string[];
+    /**
+     * The Statsig ID of this rule.
+     */
+    id: string;
+    /**
+     * The name of this rule.
+     */
+    name: string;
+    /**
+     * Of the users that meet the conditions of this rule, what percent should return true.
+     */
+    passPercentage: number;
+    /**
+     * The return value of the rule.
+     */
+    returnValue: outputs.GateRuleReturnValue;
+}
+
+export interface GateRuleCondition {
+    customId: string;
+    field: string;
+    operator: string;
+    targetValues: string[];
+    type: string;
+}
+
+export interface GateRuleReturnValue {
+}
+
+export interface MetricFunnelEventList {
+    /**
+     * The name of the funnel event used in the metric.
+     */
+    name: string;
+    /**
+     * The type of funnel event, specifying how the event is tracked.
+     */
+    type: string;
+}
+
+export interface MetricMetricComponentMetric {
+    name: string;
+    type: string;
+}
+
+export interface MetricMetricEvent {
+    /**
+     * Filtering criteria for the metric event, including conditions and values to refine the event data.
+     */
+    criterias: outputs.MetricMetricEventCriteria[];
+    /**
+     * The key for associated metadata, if applicable.
+     */
+    metadataKey: string;
+    /**
+     * The name of the metric event.
+     */
+    name: string;
+    /**
+     * The type of metric event. Allowed values include: count, count_distinct, value, and metadata.
+     */
+    type: string;
+}
+
+export interface MetricMetricEventCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column: string;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: string;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride: boolean;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: string;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values: string[];
+}
+
+export interface MetricSourceCustomFieldMapping {
+    /**
+     * The formula or expression used to compute the custom field value.
+     */
+    formula: string;
+    /**
+     * The identifier for the custom field mapping.
+     */
+    key: string;
+}
+
+export interface MetricSourceIdTypeMapping {
+    /**
+     * The corresponding column name in the source that relates to the Statsig unit ID.
+     */
+    column: string;
+    /**
+     * The identifier mapping for Statsig units.
+     */
+    statsigUnitId: string;
+}
+
+export interface MetricSourceOwner {
+    /**
+     * The email of the owner. This field is optional.
+     */
+    ownerEmail: string;
+    /**
+     * ID of the owner
+     */
+    ownerId: string;
+    /**
+     * The name of the owner. This field is optional.
+     */
+    ownerName: string;
+    /**
+     * Type of the owner (e.g., SDK_KEY or USER)
+     */
+    ownerType: string;
+}
+
+export interface MetricWarehouseNative {
+    /**
+     * Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile
+     */
+    aggregation: string;
+    /**
+     * Include units which do not have a denominator. Only applicable to ratios.
+     */
+    allowNullRatioDenominator: boolean;
+    /**
+     * Maximum cap for metric values.
+     */
+    cap: number;
+    /**
+     * Filtering criteria for the metric source
+     */
+    criterias: outputs.MetricWarehouseNativeCriteria[];
+    /**
+     * Attribution window for CUPED adjustments in days.
+     */
+    cupedAttributionWindow: number;
+    /**
+     * Custom end date for rollup in days since exposure.
+     */
+    customRollUpEnd: number;
+    /**
+     * Custom start date for rollup in days since exposure.
+     */
+    customRollUpStart: number;
+    /**
+     * Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile
+     */
+    denominatorAggregation: string;
+    /**
+     * Filtering criteria for the denominator metric source, if this metric is a ratio
+     */
+    denominatorCriterias: outputs.MetricWarehouseNativeDenominatorCriteria[];
+    /**
+     * Custom end date for rollup in days since exposure.
+     */
+    denominatorCustomRollupEnd: number;
+    /**
+     * Custom start date for rollup in days since exposure.
+     */
+    denominatorCustomRollupStart: number;
+    /**
+     * Name of the metric source for the denominator.
+     */
+    denominatorMetricSourceName: string;
+    /**
+     * Time window for the denominator metric. Specify "custom" for a custom window.
+     */
+    denominatorRollupTimeWindow: string;
+    /**
+     * Column name for the denominator’s value.
+     */
+    denominatorValueColumn: string;
+    /**
+     * Duration for counting funnel events in days.
+     */
+    funnelCalculationWindow: number;
+    /**
+     * Allowed: users┃sessions for distinct count method in funnel events.
+     */
+    funnelCountDistinct: string;
+    /**
+     * List of funnel events with associated criteria and identifiers.
+     */
+    funnelEvents: outputs.MetricWarehouseNativeFunnelEvent[];
+    /**
+     * Allowed: start_event┃exposure to determine funnel start criteria.
+     */
+    funnelStartCriteria: string;
+    /**
+     * Number of days for metric baking; specify duration for analysis.
+     */
+    metricBakeDays: number;
+    /**
+     * Specify metadata columns for breaking down metric analysis.
+     */
+    metricDimensionColumns: string[];
+    /**
+     * For Count, Sum, Mean, User Count aggregation types: the name of metric source
+     */
+    metricSourceName: string;
+    /**
+     * Aggregation type for numerator; Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile.
+     */
+    numeratorAggregation: string;
+    /**
+     * Flag to include only users with a conversion event in the metric.
+     */
+    onlyIncludeUsersWithConversionEvent: boolean;
+    /**
+     * Percentile value for statistical calculations.
+     */
+    percentile: number;
+    /**
+     * General time window for rollup; can specify custom settings.
+     */
+    rollupTimeWindow: string;
+    /**
+     * Column name representing the metric’s value.
+     */
+    valueColumn: string;
+    /**
+     * Threshold value for filtering metrics.
+     */
+    valueThreshold: number;
+    waitForCohortWindow: boolean;
+    /**
+     * High threshold for winsorization; must be between 0 and 1.
+     */
+    winsorizationHigh: number;
+    /**
+     * Low threshold for winsorization; must be between 0 and 1.
+     */
+    winsorizationLow: number;
+}
+
+export interface MetricWarehouseNativeCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column: string;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: string;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride: boolean;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: string;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values: string[];
+}
+
+export interface MetricWarehouseNativeDenominatorCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column: string;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: string;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride: boolean;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: string;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values: string[];
+}
+
+export interface MetricWarehouseNativeFunnelEvent {
+    /**
+     * Optional array of criteria to filter the funnel events, defined by various types and conditions.
+     */
+    criterias: outputs.MetricWarehouseNativeFunnelEventCriteria[];
+    /**
+     * Optional name of the metric source associated with the funnel event.
+     */
+    metricSourceName: string;
+    /**
+     * Optional step name for the funnel event, can be null if not specified.
+     */
+    name: string;
+    /**
+     * Name of column which being used as session identifier. Funnel event with the same metric source
+     */
+    sessionIdentifierField: string;
+}
+
+export interface MetricWarehouseNativeFunnelEventCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column: string;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: string;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride: boolean;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: string;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values: string[];
+}
 

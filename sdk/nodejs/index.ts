@@ -5,28 +5,46 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { GetDataSourceArgs, GetDataSourceResult, GetDataSourceOutputArgs } from "./getDataSource";
-export const getDataSource: typeof import("./getDataSource").getDataSource = null as any;
-export const getDataSourceOutput: typeof import("./getDataSource").getDataSourceOutput = null as any;
-utilities.lazyLoad(exports, ["getDataSource","getDataSourceOutput"], () => require("./getDataSource"));
+export { EntityPropertyArgs, EntityPropertyState } from "./entityProperty";
+export type EntityProperty = import("./entityProperty").EntityProperty;
+export const EntityProperty: typeof import("./entityProperty").EntityProperty = null as any;
+utilities.lazyLoad(exports, ["EntityProperty"], () => require("./entityProperty"));
+
+export { ExperimentArgs, ExperimentState } from "./experiment";
+export type Experiment = import("./experiment").Experiment;
+export const Experiment: typeof import("./experiment").Experiment = null as any;
+utilities.lazyLoad(exports, ["Experiment"], () => require("./experiment"));
+
+export { GateArgs, GateState } from "./gate";
+export type Gate = import("./gate").Gate;
+export const Gate: typeof import("./gate").Gate = null as any;
+utilities.lazyLoad(exports, ["Gate"], () => require("./gate"));
+
+export { KeysArgs, KeysState } from "./keys";
+export type Keys = import("./keys").Keys;
+export const Keys: typeof import("./keys").Keys = null as any;
+utilities.lazyLoad(exports, ["Keys"], () => require("./keys"));
+
+export { MetricArgs, MetricState } from "./metric";
+export type Metric = import("./metric").Metric;
+export const Metric: typeof import("./metric").Metric = null as any;
+utilities.lazyLoad(exports, ["Metric"], () => require("./metric"));
+
+export { MetricSourceArgs, MetricSourceState } from "./metricSource";
+export type MetricSource = import("./metricSource").MetricSource;
+export const MetricSource: typeof import("./metricSource").MetricSource = null as any;
+utilities.lazyLoad(exports, ["MetricSource"], () => require("./metricSource"));
 
 export * from "./provider";
 import { Provider } from "./provider";
 
-export { ResourceArgs, ResourceState } from "./resource";
-export type Resource = import("./resource").Resource;
-export const Resource: typeof import("./resource").Resource = null as any;
-utilities.lazyLoad(exports, ["Resource"], () => require("./resource"));
-
 
 // Export sub-modules:
 import * as config from "./config";
-import * as region from "./region";
 import * as types from "./types";
 
 export {
     config,
-    region,
     types,
 };
 
@@ -34,18 +52,33 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "xyz:index/resource:Resource":
-                return new Resource(name, <any>undefined, { urn })
+            case "statsig:index/entityProperty:EntityProperty":
+                return new EntityProperty(name, <any>undefined, { urn })
+            case "statsig:index/experiment:Experiment":
+                return new Experiment(name, <any>undefined, { urn })
+            case "statsig:index/gate:Gate":
+                return new Gate(name, <any>undefined, { urn })
+            case "statsig:index/keys:Keys":
+                return new Keys(name, <any>undefined, { urn })
+            case "statsig:index/metric:Metric":
+                return new Metric(name, <any>undefined, { urn })
+            case "statsig:index/metricSource:MetricSource":
+                return new MetricSource(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("xyz", "index/resource", _module)
-pulumi.runtime.registerResourcePackage("xyz", {
+pulumi.runtime.registerResourceModule("statsig", "index/entityProperty", _module)
+pulumi.runtime.registerResourceModule("statsig", "index/experiment", _module)
+pulumi.runtime.registerResourceModule("statsig", "index/gate", _module)
+pulumi.runtime.registerResourceModule("statsig", "index/keys", _module)
+pulumi.runtime.registerResourceModule("statsig", "index/metric", _module)
+pulumi.runtime.registerResourceModule("statsig", "index/metricSource", _module)
+pulumi.runtime.registerResourcePackage("statsig", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {
-        if (type !== "pulumi:providers:xyz") {
+        if (type !== "pulumi:providers:statsig") {
             throw new Error(`unknown provider type ${type}`);
         }
         return new Provider(name, <any>undefined, { urn });

@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/sdk
+module github.com/statsig-io/pulumi-statsig/sdk
 
 go 1.22
 

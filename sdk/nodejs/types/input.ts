@@ -4,5 +4,422 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 
+export interface EntityPropertyIdTypeMapping {
+    /**
+     * Column name linked to the ID.
+     */
+    column: pulumi.Input<string>;
+    /**
+     * ID for the Statsig unit.
+     */
+    statsigUnitId: pulumi.Input<string>;
+}
+
+export interface EntityPropertyOwner {
+    /**
+     * The email of the owner. This field is optional.
+     */
+    ownerEmail?: pulumi.Input<string>;
+    /**
+     * ID of the owner
+     */
+    ownerId?: pulumi.Input<string>;
+    /**
+     * The name of the owner. This field is optional.
+     */
+    ownerName?: pulumi.Input<string>;
+    /**
+     * Type of the owner (e.g., SDK_KEY or USER)
+     */
+    ownerType?: pulumi.Input<string>;
+}
+
+export interface ExperimentGroup {
+    description?: pulumi.Input<string>;
+    disabled?: pulumi.Input<boolean>;
+    foreignGroupId?: pulumi.Input<string>;
+    id?: pulumi.Input<string>;
+    name: pulumi.Input<string>;
+    parameterValues: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    size: pulumi.Input<number>;
+}
+
+export interface ExperimentLink {
+    /**
+     * The title of the link
+     */
+    title?: pulumi.Input<string>;
+    /**
+     * The URL of the link
+     */
+    url: pulumi.Input<string>;
+}
+
+export interface ExperimentPrimaryMetric {
+    direction?: pulumi.Input<string>;
+    hypothesizedValue?: pulumi.Input<number>;
+    name?: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
+}
+
+export interface ExperimentSecondaryMetric {
+    direction?: pulumi.Input<string>;
+    hypothesizedValue?: pulumi.Input<number>;
+    name?: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
+}
+
+export interface GateMonitoringMetric {
+    name?: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
+}
+
+export interface GateRule {
+    /**
+     * The base ID of this rule, i.e. without any added metadata. Will remain the exact same throughout
+     */
+    baseId?: pulumi.Input<string>;
+    /**
+     * An array of Condition objects.
+     */
+    conditions: pulumi.Input<pulumi.Input<inputs.GateRuleCondition>[]>;
+    /**
+     * The environments this rule is enabled for.
+     */
+    environments?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The Statsig ID of this rule.
+     */
+    id?: pulumi.Input<string>;
+    /**
+     * The name of this rule.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Of the users that meet the conditions of this rule, what percent should return true.
+     */
+    passPercentage: pulumi.Input<number>;
+    /**
+     * The return value of the rule.
+     */
+    returnValue?: pulumi.Input<inputs.GateRuleReturnValue>;
+}
+
+export interface GateRuleCondition {
+    customId?: pulumi.Input<string>;
+    field?: pulumi.Input<string>;
+    operator?: pulumi.Input<string>;
+    targetValues?: pulumi.Input<pulumi.Input<string>[]>;
+    type: pulumi.Input<string>;
+}
+
+export interface GateRuleReturnValue {
+}
+
+export interface MetricFunnelEventList {
+    /**
+     * The name of the funnel event used in the metric.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * The type of funnel event, specifying how the event is tracked.
+     */
+    type: pulumi.Input<string>;
+}
+
+export interface MetricMetricComponentMetric {
+    name: pulumi.Input<string>;
+    type: pulumi.Input<string>;
+}
+
+export interface MetricMetricEvent {
+    /**
+     * Filtering criteria for the metric event, including conditions and values to refine the event data.
+     */
+    criterias?: pulumi.Input<pulumi.Input<inputs.MetricMetricEventCriteria>[]>;
+    /**
+     * The key for associated metadata, if applicable.
+     */
+    metadataKey?: pulumi.Input<string>;
+    /**
+     * The name of the metric event.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * The type of metric event. Allowed values include: count, count_distinct, value, and metadata.
+     */
+    type?: pulumi.Input<string>;
+}
+
+export interface MetricMetricEventCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column?: pulumi.Input<string>;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: pulumi.Input<string>;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride?: pulumi.Input<boolean>;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface MetricSourceCustomFieldMapping {
+    /**
+     * The formula or expression used to compute the custom field value.
+     */
+    formula: pulumi.Input<string>;
+    /**
+     * The identifier for the custom field mapping.
+     */
+    key: pulumi.Input<string>;
+}
+
+export interface MetricSourceIdTypeMapping {
+    /**
+     * The corresponding column name in the source that relates to the Statsig unit ID.
+     */
+    column: pulumi.Input<string>;
+    /**
+     * The identifier mapping for Statsig units.
+     */
+    statsigUnitId: pulumi.Input<string>;
+}
+
+export interface MetricSourceOwner {
+    /**
+     * The email of the owner. This field is optional.
+     */
+    ownerEmail?: pulumi.Input<string>;
+    /**
+     * ID of the owner
+     */
+    ownerId?: pulumi.Input<string>;
+    /**
+     * The name of the owner. This field is optional.
+     */
+    ownerName?: pulumi.Input<string>;
+    /**
+     * Type of the owner (e.g., SDK_KEY or USER)
+     */
+    ownerType?: pulumi.Input<string>;
+}
+
+export interface MetricWarehouseNative {
+    /**
+     * Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile
+     */
+    aggregation?: pulumi.Input<string>;
+    /**
+     * Include units which do not have a denominator. Only applicable to ratios.
+     */
+    allowNullRatioDenominator?: pulumi.Input<boolean>;
+    /**
+     * Maximum cap for metric values.
+     */
+    cap?: pulumi.Input<number>;
+    /**
+     * Filtering criteria for the metric source
+     */
+    criterias?: pulumi.Input<pulumi.Input<inputs.MetricWarehouseNativeCriteria>[]>;
+    /**
+     * Attribution window for CUPED adjustments in days.
+     */
+    cupedAttributionWindow?: pulumi.Input<number>;
+    /**
+     * Custom end date for rollup in days since exposure.
+     */
+    customRollUpEnd?: pulumi.Input<number>;
+    /**
+     * Custom start date for rollup in days since exposure.
+     */
+    customRollUpStart?: pulumi.Input<number>;
+    /**
+     * Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile
+     */
+    denominatorAggregation?: pulumi.Input<string>;
+    /**
+     * Filtering criteria for the denominator metric source, if this metric is a ratio
+     */
+    denominatorCriterias?: pulumi.Input<pulumi.Input<inputs.MetricWarehouseNativeDenominatorCriteria>[]>;
+    /**
+     * Custom end date for rollup in days since exposure.
+     */
+    denominatorCustomRollupEnd?: pulumi.Input<number>;
+    /**
+     * Custom start date for rollup in days since exposure.
+     */
+    denominatorCustomRollupStart?: pulumi.Input<number>;
+    /**
+     * Name of the metric source for the denominator.
+     */
+    denominatorMetricSourceName?: pulumi.Input<string>;
+    /**
+     * Time window for the denominator metric. Specify "custom" for a custom window.
+     */
+    denominatorRollupTimeWindow?: pulumi.Input<string>;
+    /**
+     * Column name for the denominator’s value.
+     */
+    denominatorValueColumn?: pulumi.Input<string>;
+    /**
+     * Duration for counting funnel events in days.
+     */
+    funnelCalculationWindow?: pulumi.Input<number>;
+    /**
+     * Allowed: users┃sessions for distinct count method in funnel events.
+     */
+    funnelCountDistinct?: pulumi.Input<string>;
+    /**
+     * List of funnel events with associated criteria and identifiers.
+     */
+    funnelEvents?: pulumi.Input<pulumi.Input<inputs.MetricWarehouseNativeFunnelEvent>[]>;
+    /**
+     * Allowed: start_event┃exposure to determine funnel start criteria.
+     */
+    funnelStartCriteria?: pulumi.Input<string>;
+    /**
+     * Number of days for metric baking; specify duration for analysis.
+     */
+    metricBakeDays?: pulumi.Input<number>;
+    /**
+     * Specify metadata columns for breaking down metric analysis.
+     */
+    metricDimensionColumns?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * For Count, Sum, Mean, User Count aggregation types: the name of metric source
+     */
+    metricSourceName?: pulumi.Input<string>;
+    /**
+     * Aggregation type for numerator; Allowed: count┃sum┃mean┃daily*participation┃ratio┃funnel┃count*distinct┃percentile.
+     */
+    numeratorAggregation?: pulumi.Input<string>;
+    /**
+     * Flag to include only users with a conversion event in the metric.
+     */
+    onlyIncludeUsersWithConversionEvent?: pulumi.Input<boolean>;
+    /**
+     * Percentile value for statistical calculations.
+     */
+    percentile?: pulumi.Input<number>;
+    /**
+     * General time window for rollup; can specify custom settings.
+     */
+    rollupTimeWindow?: pulumi.Input<string>;
+    /**
+     * Column name representing the metric’s value.
+     */
+    valueColumn?: pulumi.Input<string>;
+    /**
+     * Threshold value for filtering metrics.
+     */
+    valueThreshold?: pulumi.Input<number>;
+    waitForCohortWindow?: pulumi.Input<boolean>;
+    /**
+     * High threshold for winsorization; must be between 0 and 1.
+     */
+    winsorizationHigh?: pulumi.Input<number>;
+    /**
+     * Low threshold for winsorization; must be between 0 and 1.
+     */
+    winsorizationLow?: pulumi.Input<number>;
+}
+
+export interface MetricWarehouseNativeCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column?: pulumi.Input<string>;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: pulumi.Input<string>;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride?: pulumi.Input<boolean>;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface MetricWarehouseNativeDenominatorCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column?: pulumi.Input<string>;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: pulumi.Input<string>;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride?: pulumi.Input<boolean>;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface MetricWarehouseNativeFunnelEvent {
+    /**
+     * Optional array of criteria to filter the funnel events, defined by various types and conditions.
+     */
+    criterias?: pulumi.Input<pulumi.Input<inputs.MetricWarehouseNativeFunnelEventCriteria>[]>;
+    /**
+     * Optional name of the metric source associated with the funnel event.
+     */
+    metricSourceName?: pulumi.Input<string>;
+    /**
+     * Optional step name for the funnel event, can be null if not specified.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Name of column which being used as session identifier. Funnel event with the same metric source
+     */
+    sessionIdentifierField?: pulumi.Input<string>;
+}
+
+export interface MetricWarehouseNativeFunnelEventCriteria {
+    /**
+     * Optional column specifying which data attribute to filter on.
+     */
+    column?: pulumi.Input<string>;
+    /**
+     * sql*filter, start*withs, ends*with, and after*exposure are only applicable in Warehouse Native
+     */
+    condition: pulumi.Input<string>;
+    /**
+     * If true, overrides null values in criterion evaluation.
+     */
+    nullVacuousOverride?: pulumi.Input<boolean>;
+    /**
+     * Type of event criterion for filtering metrics. Options include `value`, `metadata`, `user`, and `userCustom`; in Warehouse Native, this should always be `metadata`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Optional array of values for the criterion to match against.
+     */
+    values?: pulumi.Input<pulumi.Input<string>[]>;
+}
