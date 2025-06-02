@@ -46,65 +46,7 @@ var metadata []byte
 func Provider() tfbridge.ProviderInfo {
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
-		// Instantiate the Terraform provider
-		//
-		// The [pulumi-terraform-bridge](https://github.com/pulumi/pulumi-terraform-bridge) supports 3
-		// types of Terraform providers:
-		//
-		// 1. Providers written with the terraform-plugin-sdk/v1:
-		//
-		//    If the provider you are bridging is written with the terraform-plugin-sdk/v1, then you
-		//    will need to adapt the boilerplate:
-		//
-		//    - Change the import "shimv2" to "shimv1" and change the associated import to
-		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v1".
-		//
-		//    You can then proceed as normal.
-		//
-		// 2. Providers written with terraform-plugin-sdk/v2:
-		//
-		//    This boilerplate is already geared towards providers written with the
-		//    terraform-plugin-sdk/v2, since it is the most common provider framework used. No
-		//    adaptions are needed.
-		//
-		// 3. Providers written with terraform-plugin-framework:
-		//
-		//    If the provider you are bridging is written with the terraform-plugin-framework, then
-		//    you will need to adapt the boilerplate:
-		//
-		//    - Remove the `shimv2` import and add:
-		//
-		//      	pfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
-		//
-		//    - Replace `shimv2.NewProvider` with `pfbridge.ShimProvider`.
-		//
-		//    - In provider/cmd/pulumi-tfgen-statsig/main.go, replace the
-		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen" import with
-		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen". Remove the `version.Version`
-		//      argument to `tfgen.Main`.
-		//
-		//    - In provider/cmd/pulumi-resource-statsig/main.go, replace the
-		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge" import with
-		//      "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge". Replace the arguments to the
-		//      `tfbridge.Main` so it looks like this:
-		//
-		//      	tfbridge.Main(context.Background(), "statsig", statsig.Provider(),
-		//			tfbridge.ProviderMetadata{PulumiSchema: pulumiSchema})
-		//
-		//   Detailed instructions can be found at
-		//   https://pulumi-developer-docs.readthedocs.io/projects/pulumi-terraform-bridge/en/latest/docs/guides/new-pf-provider.html
-		//   After that, you can proceed as normal.
-		//
-		// This is where you give the bridge a handle to the upstream terraform provider. SDKv2
-		// convention is to have a function at "github.com/statsig-io/terraform-provider-statsig/provider".New
-		// which takes a version and produces a factory function. The provider you are bridging may
-		// not do that. You will need to find the function (generally called in upstream's main.go)
-		// that produces a:
-		//
-		// - *"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema".Provider (for SDKv2)
-		// - *"github.com/hashicorp/terraform-plugin-sdk/v1/helper/schema".Provider (for SDKv1)
-		// - "github.com/hashicorp/terraform-plugin-framework/provider".Provider (for plugin-framework)
-		//
+
 		//nolint:lll
 		P: pfbridge.ShimProvider(statsig.New()),
 
@@ -181,53 +123,47 @@ func Provider() tfbridge.ProviderInfo {
 				ComputeID: tfbridge.DelegateIDField(
 					"name",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 			"statsig_keys": {
 				ComputeID: tfbridge.DelegateIDField(
 					"key",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 			"statsig_metric_source": {
 				ComputeID: tfbridge.DelegateIDField(
 					"name",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 			"statsig_gate": {
 				ComputeID: tfbridge.DelegateIDField(
 					"name",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 			"statsig_experiment": {
 				ComputeID: tfbridge.DelegateIDField(
 					"name",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 			"statsig_metric": {
 				ComputeID: tfbridge.DelegateIDField(
 					"name",
 					"statsig",
-					"https://github.com/pulumi/pulumi-statsig",
+					"https://github.com/statsig-io/pulumi-statsig",
 				),
 			},
 		},
 	}
 
-	// MustComputeTokens maps all resources and datasources from the upstream provider into Pulumi.
-	//
-	// tokens.SingleModule puts every upstream item into your provider's main module.
-	//
-	// You shouldn't need to override anything, but if you do, use the [tfbridge.ProviderInfo.Resources]
-	// and [tfbridge.ProviderInfo.DataSources].
 	prov.MustComputeTokens(tokens.SingleModule("statsig_", mainMod,
 		tokens.MakeStandard(mainPkg)))
 

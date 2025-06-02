@@ -33,7 +33,7 @@ pip install pulumi_statsig
 To use from Go, use `go get` to grab the latest version of the library:
 
 ```bash
-go get github.com/pulumi/pulumi-statsig/sdk/go/...
+go get github.com/statsig-io/pulumi-statsig/sdk/go/...
 ```
 
 ### .NET
