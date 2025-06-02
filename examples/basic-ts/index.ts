@@ -1,6 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as xyz from "@pulumi/xyz";
+import * as statsig from "@pulumi/statsig";
 
-const resource = new xyz.Resource("Resource", { sampleAttribute: "attr" });
-
-export const sampleAttribute = resource.sampleAttribute;
+new statsig.Gate("e2e-testing", {
+  description: "A test gate",
+});
