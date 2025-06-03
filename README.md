@@ -11,13 +11,13 @@ This package is available for several languages/platforms:
 To use from JavaScript or TypeScript in Node.js, install using either `npm`:
 
 ```bash
-npm install @pulumi/statsig
+npm install @statsig/pulumi-statsig
 ```
 
 or `yarn`:
 
 ```bash
-yarn add @pulumi/statsig
+yarn add @statsig/pulumi-statsig
 ```
 
 ### Python

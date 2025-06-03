@@ -1,7 +1,7 @@
 {
     "name": "@pulumi/statsig",
-    "version": "1.0.0-alpha.0+dev",
-    "description": "A Pulumi package for creating and managing statsig resources.",
+    "version": "0.0.1",
+    "description": "A Pulumi package for creating and managing Statsig resources.",
     "keywords": [
         "statsig",
         "category/cloud"
@@ -22,6 +22,6 @@
     "pulumi": {
         "resource": true,
         "name": "statsig",
-        "version": "1.0.0-alpha.0+dev"
+        "version": "0.0.1"
     }
 }

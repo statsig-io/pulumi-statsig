@@ -3,7 +3,6 @@
         "resources": {
             "statsig_entity_property": {
                 "current": "statsig:index/entityProperty:EntityProperty",
-                "majorVersion": 1,
                 "fields": {
                     "id_type_mapping": {
                         "maxItemsOne": false
@@ -15,7 +14,6 @@
             },
             "statsig_experiment": {
                 "current": "statsig:index/experiment:Experiment",
-                "majorVersion": 1,
                 "fields": {
                     "groups": {
                         "maxItemsOne": false
@@ -45,7 +43,6 @@
             },
             "statsig_gate": {
                 "current": "statsig:index/gate:Gate",
-                "majorVersion": 1,
                 "fields": {
                     "monitoring_metrics": {
                         "maxItemsOne": false
@@ -80,7 +77,6 @@
             },
             "statsig_keys": {
                 "current": "statsig:index/keys:Keys",
-                "majorVersion": 1,
                 "fields": {
                     "environments": {
                         "maxItemsOne": false
@@ -95,7 +91,6 @@
             },
             "statsig_metric": {
                 "current": "statsig:index/metric:Metric",
-                "majorVersion": 1,
                 "fields": {
                     "funnel_event_list": {
                         "maxItemsOne": false
@@ -174,7 +169,6 @@
             },
             "statsig_metric_source": {
                 "current": "statsig:index/metricSource:MetricSource",
-                "majorVersion": 1,
                 "fields": {
                     "custom_field_mapping": {
                         "maxItemsOne": false

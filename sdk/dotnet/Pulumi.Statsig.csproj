@@ -4,12 +4,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Statsig</Authors>
     <Company>Statsig</Company>
-    <Description>A Pulumi package for creating and managing statsig resources.</Description>
+    <Description>A Pulumi package for creating and managing Statsig resources.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://www.statsig.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/statsig-io/pulumi-statsig</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>1.0.0-alpha.0+dev</Version>
+    <Version>0.0.1</Version>
 
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
