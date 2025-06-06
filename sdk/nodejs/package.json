@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi/statsig",
+    "name": "@statsig/pulumi-statsig",
     "version": "0.0.1",
     "description": "A Pulumi package for creating and managing Statsig resources.",
     "keywords": [

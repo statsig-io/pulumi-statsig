@@ -30,6 +30,7 @@
             "respectSchemaVersion": true
         },
         "nodejs": {
+            "packageName": "@statsig/pulumi-statsig",
             "packageDescription": "A Pulumi package for creating and managing Statsig resources.",
             "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/statsig-io/terraform-provider-statsig)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-statsig` repo](https://github.com/statsig-io/pulumi-statsig/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-statsig` repo](https://github.com/statsig-io/terraform-provider-statsig/issues).",
             "compatibility": "tfbridge20",
