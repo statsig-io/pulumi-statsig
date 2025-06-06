@@ -6,6 +6,6 @@
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.0.0",
-        "@pulumi/statsig": "^0.0.1"
+        "@statsig/pulumi-statsig": "^0.0.1"
     }
 }

@@ -88,6 +88,7 @@ func Provider() tfbridge.ProviderInfo {
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
+			PackageName:          "@statsig/pulumi-statsig",
 		},
 		Python: &tfbridge.PythonInfo{
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
