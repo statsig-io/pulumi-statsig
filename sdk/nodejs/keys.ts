@@ -17,7 +17,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as statsig from "@pulumi/statsig";
+ * import * as statsig from "@statsig/pulumi-statsig";
  *
  * const serverKey = new statsig.Keys("server_key", {
  *     description: "A short description of what this server key is used for.",
