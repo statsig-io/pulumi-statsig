@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig.Inputs
+namespace Statsig.Pulumi.Inputs
 {
 
     public sealed class MetricWarehouseNativeDenominatorCriteriaArgs : global::Pulumi.ResourceArgs

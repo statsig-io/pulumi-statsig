@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig
+namespace Statsig.Pulumi
 {
     /// <summary>
     /// This resource allows you to configure gates for your Statsig project.
@@ -16,7 +17,7 @@ namespace Pulumi.Statsig
     /// 
     /// To learn more about the API powering this resource, see [Gates API Documentation](https://docs.statsig.com/console-api/gates)
     /// </summary>
-    [StatsigResourceType("statsig:index/gate:Gate")]
+    [PulumiResourceType("statsig:index/gate:Gate")]
     public partial class Gate : global::Pulumi.CustomResource
     {
         [Output("creatorEmail")]

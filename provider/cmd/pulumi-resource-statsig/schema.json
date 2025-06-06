@@ -20,7 +20,11 @@
             "packageReferences": {
                 "Pulumi": "3.*"
             },
+            "namespaces": {
+                "statsig": "Pulumi"
+            },
             "compatibility": "tfbridge20",
+            "rootNamespace": "Statsig",
             "respectSchemaVersion": true
         },
         "go": {

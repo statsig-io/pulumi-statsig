@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig
+namespace Statsig.Pulumi
 {
     /// <summary>
     /// This resource allows you to configure experiments for your Statsig project.
@@ -16,7 +17,7 @@ namespace Pulumi.Statsig
     /// 
     /// To learn more about the API powering this resource, see [Experiments API Documentation](https://docs.statsig.com/console-api/experiments)
     /// </summary>
-    [StatsigResourceType("statsig:index/experiment:Experiment")]
+    [PulumiResourceType("statsig:index/experiment:Experiment")]
     public partial class Experiment : global::Pulumi.CustomResource
     {
         /// <summary>

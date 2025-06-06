@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig
+namespace Statsig.Pulumi
 {
     /// <summary>
     /// This resource allows you to configure metrics for your Statsig project.
@@ -18,7 +19,7 @@ namespace Pulumi.Statsig
     /// 
     /// &gt; Note: [Warehouse Native](https://docs.statsig.com/statsig-warehouse-native/introduction/) metrics can only be used in Warehouse Native projects
     /// </summary>
-    [StatsigResourceType("statsig:index/metric:Metric")]
+    [PulumiResourceType("statsig:index/metric:Metric")]
     public partial class Metric : global::Pulumi.CustomResource
     {
         /// <summary>
