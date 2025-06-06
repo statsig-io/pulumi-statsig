@@ -41,7 +41,7 @@ go get github.com/statsig-io/pulumi-statsig/sdk/go/...
 To use from .NET, install using `dotnet add package`:
 
 ```bash
-dotnet add package Pulumi.Statsig
+dotnet add package Statsig.Pulumi
 ```
 
 ## Configuration

@@ -117,6 +117,10 @@ func Provider() tfbridge.ProviderInfo {
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
+			RootNamespace: "Statsig",
+			Namespaces: map[string]string{
+				"statsig": "Pulumi",
+			},
 		},
 
 		Resources: map[string]*tfbridge.ResourceInfo{

@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig
+namespace Statsig.Pulumi
 {
     /// <summary>
     /// This resource allows you to configure entity properties for your Statsig project.
@@ -18,7 +19,7 @@ namespace Pulumi.Statsig
     /// 
     /// &gt; Note: This resource is only available for [Warehouse Native](https://docs.statsig.com/statsig-warehouse-native/introduction/) projects
     /// </summary>
-    [StatsigResourceType("statsig:index/entityProperty:EntityProperty")]
+    [PulumiResourceType("statsig:index/entityProperty:EntityProperty")]
     public partial class EntityProperty : global::Pulumi.CustomResource
     {
         /// <summary>

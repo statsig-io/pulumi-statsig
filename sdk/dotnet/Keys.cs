@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Statsig
+namespace Statsig.Pulumi
 {
     /// <summary>
     /// This resource allows you to configure API keys for your Statsig project.
@@ -65,7 +66,7 @@ namespace Pulumi.Statsig
     /// });
     /// ```
     /// </summary>
-    [StatsigResourceType("statsig:index/keys:Keys")]
+    [PulumiResourceType("statsig:index/keys:Keys")]
     public partial class Keys : global::Pulumi.CustomResource
     {
         [Output("description")]
