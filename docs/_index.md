@@ -1,23 +1,13 @@
 ---
 title: Statsig Provider
 meta_desc: Provides an overview on how to configure the Pulumi Statsig provider.
-layout: package
+layout: overview
 ---
-
-## Installation
-
-The Statsig provider is available as a package in the following Pulumi languages:
-
-* JavaScript/TypeScript: [`@statsig/pulumi-statsig`](https://www.npmjs.com/package/@statsig/pulumi-statsig)
-* Python: [`pulumi-statsig`](https://pypi.org/project/pulumi-statsig/)
-* Go: [`github.com/statsig-io/pulumi-statsig/sdk/go/statsig`](https://github.com/statsig-io/pulumi-statsig)
-* .NET: [`Pulumi.Statsig`](https://www.nuget.org/packages/Pulumi.Statsig)
-
-## Overview
 
 The Statsig provider is used to interact with resources supported by
 Statsig. The provider needs to be configured with the proper credentials
 before it can be used.
+
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp" >}}
@@ -53,7 +43,7 @@ config:
 import pulumi
 import pulumi_statsig as statsig
 
-# Create a DNS record
+# Create a Feature Gate
 gate = statsig.Gate("my-gate")
 ```
 {{% /choosable %}}
@@ -71,7 +61,7 @@ config:
 using System.Collections.Generic;
 using System.Linq;
 using Pulumi;
-using Statsig = Pulumi.Statsig;
+using Statsig = Statsig.Pulumi;
 
 return await Deployment.RunAsync(() =>
 {
@@ -113,6 +103,3 @@ func main() {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
-## Configuration Reference
-
-- `consoleApiKey` (String) The Statsig Console API key retrieved from Statsig console.

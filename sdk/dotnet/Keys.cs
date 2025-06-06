@@ -25,11 +25,11 @@ namespace Statsig.Pulumi
     /// using System.Collections.Generic;
     /// using System.Linq;
     /// using Pulumi;
-    /// using Statsig = Pulumi.Statsig;
+    /// using Pulumi = Statsig.Pulumi;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
-    ///     var serverKey = new Statsig.Keys("server_key", new()
+    ///     var serverKey = new Pulumi.Keys("server_key", new()
     ///     {
     ///         Description = "A short description of what this server key is used for.",
     ///         Type = "SERVER",
@@ -39,7 +39,7 @@ namespace Statsig.Pulumi
     ///         },
     ///     });
     /// 
-    ///     var clientKey = new Statsig.Keys("client_key", new()
+    ///     var clientKey = new Pulumi.Keys("client_key", new()
     ///     {
     ///         Description = "A short description of what this client key is used for.",
     ///         Type = "CLIENT",
@@ -53,7 +53,7 @@ namespace Statsig.Pulumi
     ///         },
     ///     });
     /// 
-    ///     var consoleKey = new Statsig.Keys("console_key", new()
+    ///     var consoleKey = new Pulumi.Keys("console_key", new()
     ///     {
     ///         Description = "A short description of what this console key is used for.",
     ///         Type = "CONSOLE",
