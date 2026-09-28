@@ -16,7 +16,7 @@ env:
 jobs:
   upgrade_provider:
     name: pull-workflow-changes
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

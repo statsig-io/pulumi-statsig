@@ -69,7 +69,7 @@ jobs:
       matrix:
         # We don't have any release verification configurations, so we only run on Linux to print warnings to help users configure the release verification.
         runner: ["ubuntu-latest"]
-    runs-on: ${{ matrix.runner }}
+    runs-on: ${{ fromJSON('{"ubuntu-latest":"blacksmith-2vcpu-ubuntu-2404"}')[matrix.runner] }}
     steps:
       - name: Configure Git to checkout files with long names
         run: git config --global core.longpaths true
